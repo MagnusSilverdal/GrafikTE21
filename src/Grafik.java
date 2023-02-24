@@ -141,7 +141,7 @@ public class Grafik extends Canvas implements Runnable{
             while(delta >= 1) {
                 // Uppdatera koordinaterna
                 update();
-                // Rita ut bilden med updaterad data
+                // Rita ut bilden med uppdaterad data
                 render();
                 delta--;
             }

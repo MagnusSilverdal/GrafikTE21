@@ -1,24 +1,29 @@
+package SimplePlatformer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 
-public class Template extends Canvas implements Runnable{
+public class SimplePlatformer extends Canvas implements Runnable{
     private BufferStrategy bs;
 
     private boolean running = false;
     private Thread thread;
 
-    int WIDTH = 600;
-    int HEIGHT = 400;
+    int x = 0;
+    int y = 0;
+    int vx = 0;
+    int vy = 0;
 
-    public Template() {
+    public SimplePlatformer() {
         setSize(600,400);
         JFrame frame = new JFrame();
         frame.add(this);
-        this.addKeyListener(new MyKeyListener());
-        this.addMouseMotionListener(new MyMouseMotionListener());
-        this.addMouseListener(new MyMouseListener());
+        frame.addKeyListener(new MyKeyListener());
+        //this.addMouseMotionListener(new MyMouseMotionListener());
+        //this.addMouseListener(new MyMouseListener());
+        //requestFocus();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
@@ -41,13 +46,17 @@ public class Template extends Canvas implements Runnable{
 
     public void draw(Graphics g) {
         g.clearRect(0,0,getWidth(),getHeight());
+        g.setColor(Color.RED);
+        g.fillRect(x,y,100,100);
     }
 
     private void update() {
+        x += vx;
+        y += vy;
     }
 
     public static void main(String[] args) {
-        Template minGrafik = new Template();
+        SimplePlatformer minGrafik = new SimplePlatformer();
         minGrafik.start();
     }
 
@@ -96,46 +105,34 @@ public class Template extends Canvas implements Runnable{
 
         @Override
         public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                vx = -3;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                vx = 3;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+                vy = -3;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                vy = 3;
+            }
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-        }
-    }
-
-    private class MyMouseListener implements MouseListener {
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-        }
-    }
-
-    private class MyMouseMotionListener implements MouseMotionListener {
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
-
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                vx = 0;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                vx = 0;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+                vy = 0;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                vy = 0;
+            }
         }
     }
 }
